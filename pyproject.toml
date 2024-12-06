@@ -1,0 +1,9 @@
+[project]
+name = "repl-nix-mobile-app-for-direct-market-access-for-farmers"
+version = "0.1.0"
+description = "Add your description here"
+requires-python = ">=3.11"
+dependencies = [
+    "flask>=3.1.0",
+    "sqlalchemy>=2.0.36",
+]

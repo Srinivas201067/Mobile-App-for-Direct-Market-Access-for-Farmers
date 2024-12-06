@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - CropCart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+    <style>
+        /* Reset and Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+            overflow-x: hidden;
+        }
+
+        
+
+
+
+        /* About Section */
+        .about-section {
+            display: flex;
+            justify-content: center;
+            margin-top:10px;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 3rem 1rem;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: slideIn 1.5s ease-in-out;
+        }
+
+        .about-text {
+            flex: 1;
+            max-width: 500px;
+            padding: 1rem;
+            animation: fadeInLeft 1.5s ease-in-out;
+        }
+
+        .about-text h2 {
+            color: #4FFFB0;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-image {
+            flex: 1;
+            max-width: 400px;
+            padding: 1rem;
+            animation: fadeInRight 1.5s ease-in-out;
+        }
+
+        .about-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Team Section */
+        .team-section {
+            text-align: center;
+            padding: 3rem 1rem;
+            background: #f0f0f0;
+        }
+
+        .team-section h2 {
+            color: #4FFFB0;
+            margin-bottom: 2rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-member {
+            background-color: #fff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-member img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+
+        .team-member h3 {
+            margin: 0.5rem 0;
+            color: #333;
+        }
+
+        .team-member p {
+            color: #666;
+        }
+
+        .container { max-width: 1100px; margin: auto; padding: 0 1rem; }
+
+        /* Navbar Styles */
+        .header { 
+          position: fixed; 
+          width: 100%; 
+          top: 0; 
+          background: #fff; 
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+          z-index: 100; 
+        }
+        .nav { 
+          display: flex; 
+          justify-content: space-between; 
+          align-items: center; 
+          padding: 1rem 0; 
+        }
+        .nav__logo { 
+          font-weight: bold; 
+          background: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+          -webkit-background-clip: text;
+          color: transparent;
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+        }
+        .nav__logo img { height: 35px; margin-left: 4px; }
+        .nav__list { 
+          display: flex; 
+          gap: 1.5rem; 
+          list-style: none; 
+        }
+        .nav__link { 
+          color: #333; 
+          text-decoration: none; 
+          display: flex; 
+          align-items: center; 
+          gap: 0.5rem; 
+          transition: all 0.3s; 
+        }
+        .nav__link:hover, .nav__link.active { 
+          color: #4FFFB0; 
+          text-shadow: 0px 0px 8px #4FFFB0; 
+        }
+        .nav__icons { 
+          display: flex; 
+          gap: 0.5rem; 
+          align-items: center; 
+        }
+        .nav__button { 
+          padding: 0.5rem 1rem; 
+          color: #fff; 
+          background-color: #4FFFB0; 
+          border: none; 
+          border-radius: 5px; 
+          cursor: pointer; 
+          transition: background-color 0.3s; 
+        }
+        .nav__button:hover { background-color: #3ec99b; }
+        .nav__toggle { 
+          display: none; 
+          font-size: 1.5rem; 
+          cursor: pointer; 
+        }
+        @media (max-width: 768px) {
+          .nav__list { 
+            position: fixed; 
+            top: 0; 
+            right: -100%;
+            flex-direction: column; 
+            background: #fff; 
+            width: 60%; 
+            height: 100vh; 
+            padding-top: 4rem; 
+            transition: right 0.3s;
+            z-index: 100;
+          }
+          .nav__list.show { right: 0; }
+          .nav__toggle { display: block; color: #333; z-index: 102; }
+        }
+
+        .about-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            padding: 3rem 1rem;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: slideIn 1.5s ease-in-out;
+            gap: 2rem; /* Add space between text and image */
+        }
+
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+            max-width: 500px;
+            padding: 1rem;
+            animation: fadeInLeft 1.5s ease-in-out;
+        }
+
+        .about-text h2 {
+            color: #4FFFB0;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            padding: 1rem;
+            animation: fadeInRight 1.5s ease-in-out;
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Design for Desktop and Mobile */
+        @media (max-width: 768px) {
+            .about-section {
+                flex-direction: column;
+                padding: 2rem 1rem;
+            }
+
+            .about-text,
+            .about-image {
+                max-width: 100%;
+                text-align: center;
+                padding: 0;
+            }
+
+            .about-image img {
+                margin: 0 auto;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .about-section {
+                gap: 4rem; /* Increase spacing on larger screens */
+                padding: 4rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+
+     <header class="header">
+        <div class="container">
+          <nav class="nav">
+            <a href="#" class="nav__logo">
+              CropCart
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRYf8F22QlIDXQCPWgmW2KLZXxPhA9sIU9Yw&s" alt="Logo">
+            </a>
+            <ul class="nav__list" id="nav-menu">
+              <li><a href="/" class="nav__link"><i class="ri-home-line"></i> Home</a></li>
+              <li><a href="/products" class="nav__link"><i class="ri-shopping-cart-line"></i> Products</a></li>
+              <li><a href="about" class="nav__link active"><i class="ri-information-line"></i> About Us</a></li>
+              <li><a href="/service" class="nav__link"><i class="ri-service-line"></i> Services</a></li>
+              <li><a href="#" class="nav__link"><i class="ri-contacts-line"></i> Contact</a></li>
+              <li><a href="/dashboard" class="nav__link"><i class="ri-dashboard-line"></i> Dashboard</a></li>
+              <li><a href="/profile" class="nav__link"><i class="ri-user-line"></i></i> Profile</a></li>
+
+            </ul>
+            <div class="nav__icons">
+              {% if not logged_in %}
+                <button class="nav__button" onclick="window.location.href='/login'">Login</button>
+                <button class="nav__button" onclick="window.location.href='/SingUp'"> Sign Up
+                </button>
+              {% else %}
+               
+                <button class="nav__button" onclick="window.location.href='/logout'">
+                  <i class="ri-logout-box-line"></i> Logout
+                </button>
+              {% endif %}
+              <i class="ri-menu-line nav__toggle" id="nav-toggle"></i>
+            </div>
+
+          </nav>
+        </div>
+      </header>
+
+    <section class="about-section">
+        <div class="about-text">
+            <h2>About Us</h2>
+            <p>
+                CropCart bridges the gap between farmers and buyers by providing a direct platform for communication and trade. 
+                Our mission is to empower farmers with the tools to sell their produce directly to consumers and retailers, 
+                eliminating the need for intermediaries.
+            </p>
+            <p>
+                We believe in creating a sustainable and fair marketplace where farmers gain more profits, 
+                and buyers enjoy fresh, quality produce at competitive prices.
+            </p>
+        </div>
+        <div class="about-image">
+            <img src="https://via.placeholder.com/400x300" alt="About Image">
+        </div>
+    </section>
+
+<section class="team-section">
+    <h2>Meet Our Team</h2>
+    <div class="team-grid">
+        <div class="team-member">
+            <img src="https://via.placeholder.com/100" alt="Team Member">
+            <h3>John Doe</h3>
+            <p>Founder & CEO</p>
+        </div>
+        <div class="team-member">
+            <img src="https://via.placeholder.com/100" alt="Team Member">
+            <h3>Jane Smith</h3>
+            <p>Head of Marketing</p>
+        </div>
+        <div class="team-member">
+            <img src="https://via.placeholder.com/100" alt="Team Member">
+            <h3>Emily Johnson</h3>
+            <p>Lead Developer</p>
+        </div>
+    </div>
+</section>
+<script>
+    const navMenu = document.getElementById('nav-menu');
+    const navToggle = document.getElementById('nav-toggle');
+
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('show');
+    });
+
+    function setActive(link) {
+      const links = document.querySelectorAll('.nav__link');
+      links.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    }
+  </script>
+</body>
+</html>

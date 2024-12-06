@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Page</title>
+<style>
+/* Same styles as before */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 275px;
+    margin-top:70px;
+}
+
+h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    color: #fff;
+    background-color: #4FFFB0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #3ec99b;
+}
+
+.error {
+    color: #43e97b;
+    margin-bottom: 15px;
+}
+.gradient-text {
+                font-weight: bold;
+                background: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+                -webkit-background-clip: text;
+                color: transparent;
+}
+    .login-container img {
+        width: 40%;
+        margin-bottom: 20px;
+    }
+    .container { max-width: 1100px; margin: auto; padding: 0 1rem; }
+
+    /* Navbar Styles */
+    .header { 
+      position: fixed; 
+      width: 100%; 
+      top: 0; 
+      background: #fff; 
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+      z-index: 100; 
+    }
+    .nav { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 1rem 0; 
+    }
+    .nav__logo { 
+      font-weight: bold; 
+      background: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .nav__logo img { height: 35px; margin-left: 4px; }
+    .nav__list { 
+      display: flex; 
+      gap: 1.5rem; 
+      list-style: none; 
+    }
+    .nav__link { 
+      color: #333; 
+      text-decoration: none; 
+      display: flex; 
+      align-items: center; 
+      gap: 0.5rem; 
+      transition: all 0.3s; 
+    }
+    .nav__link:hover, .nav__link.active { 
+      color: #4FFFB0; 
+      text-shadow: 0px 0px 8px #4FFFB0; 
+    }
+    .nav__icons { 
+      display: flex; 
+      gap: 0.5rem; 
+      align-items: center; 
+    }
+    .nav__button { 
+      padding: 0.5rem 1rem; 
+      color: #fff; 
+      background-color: #4FFFB0; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      transition: background-color 0.3s; 
+    }
+    .nav__button:hover { background-color: #3ec99b; }
+    .nav__toggle { 
+      display: none; 
+      font-size: 1.5rem; 
+      cursor: pointer; 
+    }
+    @media (max-width: 768px) {
+      .nav__list { 
+        position: fixed; 
+        top: 0; 
+        right: -100%;
+        flex-direction: column; 
+        background: #fff; 
+        width: 60%; 
+        height: 100vh; 
+        padding-top: 4rem; 
+        transition: right 0.3s;
+        z-index: 100;
+      }
+      .nav__list.show { right: 0; }
+      .nav__toggle { display: block; color: #333; z-index: 102; }
+    }
+</style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+          <nav class="nav">
+            <a href="/" class="nav__logo">
+              CropCart
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRYf8F22QlIDXQCPWgmW2KLZXxPhA9sIU9Yw&s" alt="Logo">
+            </a>
+            <ul class="nav__list" id="nav-menu">
+              <li><a href="#" class="nav__link active"><i class="ri-home-line"></i> Home</a></li>
+              <li><a href="/products" class="nav__link"><i class="ri-shopping-cart-line"></i> Products</a></li>
+              <li><a href="about" class="nav__link"><i class="ri-information-line"></i> About Us</a></li>
+              <li><a href="/service" class="nav__link"><i class="ri-service-line"></i> Services</a></li>
+              <li><a href="#" class="nav__link"><i class="ri-contacts-line"></i> Contact</a></li>
+              <li><a href="/dashboard" class="nav__link"><i class="ri-dashboard-line"></i> Dashboard</a></li>
+              <li><a href="/profile" class="nav__link"><i class="ri-user-line"></i></i> Profile</a></li>
+
+            </ul>
+            <div class="nav__icons">
+              {% if not logged_in %}
+                <button class="nav__button" onclick="window.location.href='/login'">Login</button>
+                <button class="nav__button" onclick="window.location.href='/SingUp'"> Sign Up
+                </button>
+              {% else %}
+
+
+
+                <button class="nav__button" onclick="window.location.href='/logout'">
+                  <i class="ri-logout-box-line"></i> Logout
+                </button>
+              {% endif %}
+              <i class="ri-menu-line nav__toggle" id="nav-toggle"></i>
+            </div>
+
+          </nav>
+        </div>
+      </header>
+
+<div class="login-container">
+    {% if utype=='1' %}
+    <h2 class="gradient-text">Farmer Login</h2>
+    {% elif utype=='2' %}
+    <h2 class="gradient-text">Buyer Login</h2>
+    {% else %}
+    <h2 class="gradient-text">Admin Login</h2>
+    {% endif %}
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+    {% if utype=='1' %}
+    <img src="https://cdn-icons-png.flaticon.com/256/8686/8686070.png" alt="Farmer">
+    {% elif utype=='2' %}
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQd4mMiaPELqJC5y-9nuQ5O2XyTj4iKH9V6FQ&s" alt="Buyer">
+    {% else %}
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNxJmC9P6WwoaGDuHdddcYx1v2JhsRRsv7hw&s" alt="Admin">
+    {% endif %}
+    
+    <form action="/check_user" method="post">
+        <input type="text" name="uid" id="uid" class="input-field" placeholder="Username1" required>
+        <input type="password" name="pwd" id="pwd" class="input-field" placeholder="Password" required>
+      <input type="hidden" name="utype" value="{{ utype }}">
+        <button type="submit" class="btn">Login</button>
+    </form>
+</div>
+
+</body>
+</html>

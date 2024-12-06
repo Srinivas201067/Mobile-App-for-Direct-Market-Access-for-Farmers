@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CropCart | Our Services</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+  <style>
+    body { font-family: 'Roboto', sans-serif; background-color: #f9f9f9; margin: 0; color: #333; }
+    .container { max-width: 1100px; margin: auto; padding: 1rem; margin-top:200px; }
+    
+    h1 { font-size: 2.5rem; color: #4FFFB0; margin-bottom: 1rem; }
+    p { font-size: 1.2rem; margin-bottom: 2rem; }
+
+    /* Services Section */
+    .services {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+      margin-top: 100px;
+    }
+    .service {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+    .service i {
+      font-size: 3rem;
+      color: #4FFFB0;
+      margin-bottom: 1rem;
+    }
+    .service h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #333;
+    }
+    .service p {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #666;
+    }
+    .cta-section {
+      text-align: center;
+      padding: 2rem;
+      background-color: #4FFFB0;
+      color: white;
+    }
+    .cta-section h2 { margin-bottom: 1rem; }
+    .cta-btn {
+      padding: 0.8rem 1.5rem;
+      background-color: white;
+      color: #4FFFB0;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    .cta-btn:hover {
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+    .container { max-width: 1100px; margin: auto; padding: 0 1rem; }
+
+    /* Navbar Styles */
+    .header { 
+      position: fixed; 
+      width: 100%; 
+      top: 0; 
+      background: #fff; 
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+      z-index: 100; 
+    }
+    .nav { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 1rem 0;
+      height: 35px; 
+    }
+    .nav__logo { 
+      font-weight: bold; 
+      background: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .nav__logo img { height: 35px; margin-left: 4px; }
+    .nav__list { 
+      display: flex; 
+      gap: 1.5rem; 
+      list-style: none; 
+    }
+    .nav__link { 
+      color: #333; 
+      text-decoration: none; 
+      display: flex; 
+      align-items: center; 
+      gap: 0.5rem; 
+      transition: all 0.3s; 
+    }
+    .nav__link:hover, .nav__link.active { 
+      color: #4FFFB0; 
+      text-shadow: 0px 0px 8px #4FFFB0; 
+    }
+    .nav__icons { 
+      display: flex; 
+      gap: 0.5rem; 
+      align-items: center; 
+    }
+    .nav__button { 
+      padding: 0.5rem 1rem; 
+      color: #fff; 
+      background-color: #4FFFB0; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      transition: background-color 0.3s; 
+    }
+    .nav__button:hover { background-color: #3ec99b; }
+    .nav__toggle { 
+      display: none; 
+      font-size: 1.5rem; 
+      cursor: pointer; 
+    }
+    @media (max-width: 768px) {
+      .nav__list { 
+        position: fixed; 
+        top: 0; 
+        right: -100%;
+        flex-direction: column; 
+        background: #fff; 
+        width: 60%; 
+        height: 100vh; 
+        padding-top: 4rem; 
+        transition: right 0.3s;
+        z-index: 100;
+      }
+      .nav__list.show { right: 0; }
+      .nav__toggle { display: block; color: #333; z-index: 102; }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+
+   <header class="header">
+      <div class="container">
+        <nav class="nav">
+          <a href="#" class="nav__logo">
+            CropCart
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRYf8F22QlIDXQCPWgmW2KLZXxPhA9sIU9Yw&s" alt="Logo">
+          </a>
+          <ul class="nav__list" id="nav-menu">
+            <li><a href="/" class="nav__link"><i class="ri-home-line"></i> Home</a></li>
+            <li><a href="/products" class="nav__link"><i class="ri-shopping-cart-line"></i> Products</a></li>
+            <li><a href="about" class="nav__link"><i class="ri-information-line"></i> About Us</a></li>
+            <li><a href="/service" class="nav__link active"><i class="ri-service-line"></i> Services</a></li>
+            <li><a href="#" class="nav__link"><i class="ri-contacts-line"></i> Contact</a></li>
+            <li><a href="/dashboard" class="nav__link"><i class="ri-dashboard-line"></i> Dashboard</a></li>
+            <li><a href="/profile" class="nav__link"><i class="ri-user-line"></i></i> Profile</a></li>
+
+          </ul>
+          <div class="nav__icons">
+            {% if not logged_in %}
+              <button class="nav__button" onclick="window.location.href='/login'">Login</button>
+              <button class="nav__button" onclick="window.location.href='/SingUp'"> Sign Up
+              </button>
+            {% else %}
+
+              <button class="nav__button" onclick="window.location.href='/logout'">
+                <i class="ri-logout-box-line"></i> Logout
+              </button>
+            {% endif %}
+            <i class="ri-menu-line nav__toggle" id="nav-toggle"></i>
+          </div>
+
+        </nav>
+      </div>
+    </header>
+
+
+  <!-- Services Section -->
+  <div class="container">
+    <div class="services">
+      <div class="service">
+        <i class="ri-shopping-cart-2-line"></i>
+        <h3>Marketplace</h3>
+        <p>Connect directly with consumers and retailers to sell fresh produce and other agricultural products without intermediaries.</p>
+      </div>
+      <div class="service">
+        <i class="ri-hand-heart-line"></i>
+        <h3>Farmer Support</h3>
+        <p>Receive guidance, training, and resources to improve crop yields and farming practices for better outcomes.</p>
+      </div>
+      <div class="service">
+        <i class="ri-exchange-dollar-line"></i>
+        <h3>Fair Pricing</h3>
+        <p>Negotiate prices directly with buyers to ensure you get fair compensation for your hard work and products.</p>
+      </div>
+      <div class="service">
+        <i class="ri-earth-line"></i>
+        <h3>Sustainability</h3>
+        <p>Promote eco-friendly farming methods and practices that protect the environment while boosting productivity.</p>
+      </div>
+      <div class="service">
+        <i class="ri-service-line"></i>
+        <h3>Logistics Support</h3>
+        <p>Access reliable transportation and logistics services to ensure timely delivery of your products to buyers.</p>
+      </div>
+      <div class="service">
+        <i class="ri-global-line"></i>
+        <h3>Global Reach</h3>
+        <p>Expand your market and reach customers beyond your local area, increasing sales and opportunities.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Call to Action -->
+  <div class="cta-section">
+    <h2>Join CropCart and Experience the Difference!</h2>
+    <a href="/signup" class="cta-btn">Get Started</a>
+  </div>
+  <script>
+    const navMenu = document.getElementById('nav-menu');
+    const navToggle = document.getElementById('nav-toggle');
+
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('show');
+    });
+
+    function setActive(link) {
+      const links = document.querySelectorAll('.nav__link');
+      links.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Navbar with Farmer, Buyer, and Admin Sections</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 0 1rem;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .nav__logo {
+            font-weight: bold;
+            background: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav__logo img {
+            height: 35px;
+            margin-left: 4px;
+        }
+
+        .nav__list {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+        }
+
+        .nav__link {
+            color: #333;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+        }
+
+        .nav__link:hover, .nav__link.active {
+            color: #4FFFB0;
+            text-shadow: 0px 0px 8px #4FFFB0;
+        }
+
+        .nav__icons {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .nav__button {
+            padding: 0.5rem 1rem;
+            color: #fff;
+            background-color: #4FFFB0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .nav__button:hover {
+            background-color: #3ec99b;
+        }
+
+        /* Login Section Styles */
+        .login-section {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 100px;
+        }
+
+        .login-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 25%;
+            margin: 15px;
+        }
+
+        .login-container img {
+            width: 40%;
+            margin-bottom: 20px;
+        }
+
+        .login-container form {
+            margin-top: 10px;
+            
+        }
+
+        .login-container p {
+            margin-top: 10px;
+        }
+
+        .signup-link {
+            color: #43e97b;
+            text-decoration: none;
+        }
+
+        .signup-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            font-weight: bold;
+            background: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .login-container {
+                width: 100%;
+                max-width: 400px;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 15px;
+            }
+        }
+
+        /* Responsive Navbar */
+        @media (max-width: 768px) {
+            .nav__list {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                flex-direction: column;
+                background: #fff;
+                width: 60%;
+                height: 100vh;
+                padding-top: 4rem;
+                z-index: 100;
+                transition: right 0.3s;
+            }
+
+            .nav__list.show {
+                right: 0;
+            }
+
+            .nav__toggle {
+                display: block;
+                color: #333;
+                z-index: 102;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="nav__logo">
+                    CropCart
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRYf8F22QlIDXQCPWgmW2KLZXxPhA9sIU9Yw&s" alt="Logo">
+                </a>
+                <ul class="nav__list" id="nav-menu">
+                    <li><a href="/" class="nav__link" onclick="setActive(this)"><i class="ri-home-line"></i> Home</a></li>
+                    <li><a href="/about" class="nav__link" onclick="setActive(this)"><i class="ri-information-line"></i> About Us</a></li>
+                    <li><a href="/service" class="nav__link" onclick="setActive(this)"><i class="ri-service-line"></i> Services</a></li>
+                    <li><a href="#" class="nav__link" onclick="setActive(this)"><i class="ri-contacts-line"></i> Contact</a></li>
+                    <li><a href="/dashboard" class="nav__link" onclick="setActive(this)"><i class="ri-dashboard-line"></i> Dashboard</a></li>
+                </ul>
+                <div class="nav__icons">
+                    <i class="ri-search-line"></i>
+                    
+                    <button class="nav__button" onclick="window.location.href='/login'">Login</button>
+                    <button class="nav__button" onclick="window.location.href='/SingUp'">Sign Up</button>
+                    <i class="ri-menu-line nav__toggle" id="nav-toggle"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Login Section -->
+    <div class="login-section">
+        <div class="login-container">
+            
+            <h2 class="gradient-text">Farmer</h2>
+            <img src="https://cdn-icons-png.flaticon.com/256/8686/8686070.png" alt="Farmer">
+            <form action="/log">
+                <input type="number" value=1 name="utype" hidden>
+                <button class="nav__button">Login</button>
+                <p>Don't have an account? <a href="signup.html" class="signup-link">Register</a></p>
+            </form>
+        </div>
+        <div class="login-container">
+            <h2 class="gradient-text">Buyer</h2>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQd4mMiaPELqJC5y-9nuQ5O2XyTj4iKH9V6FQ&s" alt="Buyer">
+            <form action="/log">
+                <input type="number" value=2 name="utype" hidden>
+                <button class="nav__button">Login</button>
+                <p>Don't have an account? <a href="signup.html" class="signup-link">Register</a></p>
+            </form>
+        </div>
+        <div class="login-container">
+            <h2 class="gradient-text">Admin</h2>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNxJmC9P6WwoaGDuHdddcYx1v2JhsRRsv7hw&s" alt="Admin">
+            <form action="/log">
+                <input type="number" value=3 name="utype" hidden>
+                <button class="nav__button">Login</button>
+                <p>Don't have an account? <a href="singup.html" class="signup-link">Register</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const navMenu = document.getElementById('nav-menu');
+        const navToggle = document.getElementById('nav-toggle');
+
+        navToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('show');
+        });
+
+        function setActive(link) {
+            const links = document.querySelectorAll('.nav__link');
+            links.forEach(l => {
+                l.classList.remove('active');
+            });
+            link.classList.add('active');
+        }
+    </script>
+</body>
+</html>

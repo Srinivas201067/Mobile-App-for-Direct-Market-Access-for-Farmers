@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | CropCart</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    /* Base Styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Roboto', sans-serif; background-color: #f9f9f9; color: #333; overflow-x: hidden; }
+    a { text-decoration: none; }
+    ul { list-style: none; }
+
+    /* Admin Dashboard */
+    .admin-dashboard {
+      padding: 2rem;
+      margin-top:50px;
+    }
+    .admin-dashboard h1 { text-align: center; font-size: 2.5rem; margin-bottom: 2rem; color: #4FFFB0; }
+
+    /* Stats Section */
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: space-around;
+      margin-bottom: 2rem;
+    }
+    .stat {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      flex: 1 1 30%;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .stat:hover { transform: translateY(-5px); }
+    .stat h3 { font-size: 1.5rem; color: #333; margin-bottom: 1rem; }
+    .stat p { font-size: 1.2rem; color: #4FFFB0; font-weight: bold; }
+
+    /* Chart Containers */
+    .chart-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 2rem;
+    }
+    .chart {
+      background: white;
+      border-radius: 10px;
+      padding: 1rem;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      width: 45%;
+    }
+
+    @media (max-width: 768px) {
+      .stats { flex-direction: column; }
+      .stat { flex: 1 1 100%; }
+      .chart { width: 100%; }
+    }
+    .header { 
+      position: fixed; 
+      width: 100%; 
+      top: 0; 
+      background: #fff; 
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+      z-index: 100; 
+    }
+    .nav { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 1rem 0; 
+    }
+    .nav__logo { 
+      font-weight: bold; 
+      background: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .nav__logo img { height: 35px; margin-left: 4px; }
+    .nav__list { 
+      display: flex; 
+      gap: 1.5rem; 
+      list-style: none; 
+    }
+    .nav__link { 
+      color: #333; 
+      text-decoration: none; 
+      display: flex; 
+      align-items: center; 
+      gap: 0.5rem; 
+      transition: all 0.3s; 
+    }
+    .nav__link:hover, .nav__link.active { 
+      color: #4FFFB0; 
+      text-shadow: 0px 0px 8px #4FFFB0; 
+    }
+    .nav__icons { 
+      display: flex; 
+      gap: 0.5rem; 
+      align-items: center; 
+    }
+    .nav__button { 
+      padding: 0.5rem 1rem; 
+      color: #fff; 
+      background-color: #4FFFB0; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      transition: background-color 0.3s; 
+    }
+    .nav__button:hover { background-color: #3ec99b; }
+    .nav__toggle { 
+      display: none; 
+      font-size: 1.5rem; 
+      cursor: pointer; 
+    }
+    @media (max-width: 768px) {
+      .nav__list { 
+        position: fixed; 
+        top: 0; 
+        right: -100%;
+        flex-direction: column; 
+        background: #fff; 
+        width: 60%; 
+        height: 100vh; 
+        padding-top: 4rem; 
+        transition: right 0.3s;
+        z-index: 100;
+      }
+      .nav__list.show { right: 0; }
+      .nav__toggle { display: block; color: #333; z-index: 102; }
+    }
+
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="/" class="nav__logo">
+          CropCart
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRYf8F22QlIDXQCPWgmW2KLZXxPhA9sIU9Yw&s" alt="Logo">
+        </a>
+        <ul class="nav__list" id="nav-menu">
+          <li><a href="/admin" class="nav__link active"></i> Dashboard</a></li>
+          <li><a href="/ManageU" class="nav__link">Manage Users</a></li>
+          <li><a href="/ManageP" class="nav__link">Manage Products</a></li>
+          <li><a href="/ManageO" class="nav__link">Manage Orders</a></li>
+          <li><a href="#" class="nav__link">Manage Application</a></li>
+          
+
+        </ul>
+        <div class="nav__icons">
+          {% if not logged_in %}
+            <button class="nav__button" onclick="window.location.href='/login'">Login</button>
+            <button class="nav__button" onclick="window.location.href='/SingUp'"> Sign Up
+            </button>
+          {% else %}
+
+
+
+            <button class="nav__button" onclick="window.location.href='/logout'">
+              <i class="ri-logout-box-line"></i> Logout
+            </button>
+          {% endif %}
+          <i class="ri-menu-line nav__toggle" id="nav-toggle"></i>
+        </div>
+
+      </nav>
+    </div>
+  </header>
+
+  <!-- Admin Dashboard Content -->
+  <div class="admin-dashboard">
+    <h1>Welcome, Admin</h1>
+
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat">
+        <h3>Total Users</h3>
+        <p>{{uc}}</p>
+      </div>
+      <div class="stat">
+        <h3>Total Orders</h3>
+        <p>{{oc}}</p>
+      </div>
+      <div class="stat">
+        <h3>Total Products</h3>
+        <p>{{pc}}</p>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="chart-container">
+      <div class="chart">
+        <canvas id="pieChart"></canvas>
+      </div>
+      <div class="chart">
+        <canvas id="barChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Pie Chart
+    const pieCtx = document.getElementById('pieChart').getContext('2d');
+    new Chart(pieCtx, {
+      type: 'pie',
+      data: {
+        labels: ['Users', 'Orders', 'Products'],
+        datasets: [{
+          data: [{{uc}}, {{oc}}, {{pc}}],
+          backgroundColor: ['#4FFFB0', '#4FBFFF', '#FF4FB0']
+        }]
+      }
+    });
+
+    // Bar Chart
+    const barCtx = document.getElementById('barChart').getContext('2d');
+    new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: ['Users', 'Orders', 'Products'],
+        datasets: [{
+          label: 'Count',
+          data: [{{uc}}, {{oc}}, {{pc}}],
+          backgroundColor: ['#4FFFB0', '#4FBFFF', '#FF4FB0']
+        }]
+      },
+      options: {
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+    const navMenu = document.getElementById('nav-menu');
+    const navToggle = document.getElementById('nav-toggle');
+
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('show');
+    });
+
+    function setActive(link) {
+      const links = document.querySelectorAll('.nav__link');
+      links.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    }
+  </script>
+</body>
+</html>

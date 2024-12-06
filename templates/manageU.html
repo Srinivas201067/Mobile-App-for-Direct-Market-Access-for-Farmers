@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | CropCart</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Roboto', sans-serif; line-height: 1.6; background-color: #f9f9f9; color: #333; }
+    .container { max-width: 1100px; margin: auto; padding: 0 1rem; }
+
+    /* Navbar Styles */
+    .header { 
+      position: fixed; 
+      width: 100%; 
+      top: 0; 
+      background: #fff; 
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+      z-index: 100; 
+    }
+    .nav { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 1rem 0; 
+    }
+    .nav__logo { 
+      font-weight: bold; 
+      background: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .nav__logo img { height: 35px; margin-left: 4px; }
+    .nav__list { 
+      display: flex; 
+      gap: 1.5rem; 
+      list-style: none; 
+    }
+    .nav__link { 
+      color: #333; 
+      text-decoration: none; 
+      display: flex; 
+      align-items: center; 
+      gap: 0.5rem; 
+      transition: all 0.3s; 
+    }
+    .nav__link:hover, .nav__link.active { 
+      color: #4FFFB0; 
+      text-shadow: 0px 0px 8px #4FFFB0; 
+    }
+    .nav__icons { 
+      display: flex; 
+      gap: 0.5rem; 
+      align-items: center; 
+    }
+    .nav__button { 
+      padding: 0.5rem 1rem; 
+      color: #fff; 
+      background-color: #4FFFB0; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      transition: background-color 0.3s; 
+    }
+    .nav__button:hover { background-color: #3ec99b; }
+    .nav__toggle { 
+      display: none; 
+      font-size: 1.5rem; 
+      cursor: pointer; 
+    }
+    @media (max-width: 768px) {
+      .nav__list { 
+        position: fixed; 
+        top: 0; 
+        right: -100%;
+        flex-direction: column; 
+        background: #fff; 
+        width: 60%; 
+        height: 100vh; 
+        padding-top: 4rem; 
+        transition: right 0.3s;
+        z-index: 100;
+      }
+      .nav__list.show { right: 0; }
+      .nav__toggle { display: block; color: #333; z-index: 102; }
+    }
+
+    /* Table Styles */
+    .table-container {
+      margin-top: 4rem; /* Adjust spacing to account for fixed navbar */
+      overflow-x: auto; /* Horizontal scroll for mobile */
+    }
+    .table {
+      width: 100%;
+      margin-top: 2rem;
+      border-collapse: collapse;
+    }
+    .table th, .table td {
+      padding: 1rem;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    .table th {
+      background-color: #4FFFB0;
+      color: white;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 0.8rem 1.5rem;
+      background-color: #4FFFB0;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #3ec99b;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="/" class="nav__logo">
+          CropCart
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRYf8F22QlIDXQCPWgmW2KLZXxPhA9sIU9Yw&s" alt="Logo">
+        </a>
+        <ul class="nav__list" id="nav-menu">
+          <li><a href="/admin" class="nav__link"></i> Dashboard</a></li>
+          <li><a href="/ManageU" class="nav__link active">Manage Users</a></li>
+          <li><a href="/ManageP" class="nav__link">Manage Products</a></li>
+          <li><a href="/ManageO" class="nav__link">Manage Orders</a></li>
+          <li><a href="#" class="nav__link">Manage Application</a></li>
+
+
+        </ul>
+        <div class="nav__icons">
+          {% if not logged_in %}
+            <button class="nav__button" onclick="window.location.href='/login'">Login</button>
+            <button class="nav__button" onclick="window.location.href='/SingUp'"> Sign Up</button>
+          {% else %}
+            <button class="nav__button" onclick="window.location.href='/logout'">
+              <i class="ri-logout-box-line"></i> Logout
+            </button>
+          {% endif %}
+          <i class="ri-menu-line nav__toggle" id="nav-toggle"></i>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <div class="table-container">
+      <h2>Users</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>User type</th>
+            <th>Date of Birth</th>
+            <th>Email</th>
+            <th>Mobile no</th>
+            <th>Gender</th>
+            <th>Occupation</th>
+            <th>Id type</th>
+            <th>Id no</th>
+            <th>Authorized by</th>
+            <th>Address type</th>
+            <th>Nationality</th>
+            <th>State</th>
+            <th>District</th>
+            <th>Town</th>
+            <th>House no</th>
+            <th>Remove</th>
+
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+          <tr>
+            <td>{{ user['uname'] }}</td>
+            <td>{{ user['utpye'] }}</td>
+            <td>{{ user['dob'] }}</td>
+            <td>{{ user['email'] }}</td>
+            <td>{{ user['mobilno'] }}</td>
+            <td>{{ user['gender'] }}</td>
+            <td>{{ user['ocup'] }}</td>
+            <td>{{ user['idtpye'] }}</td>
+            <td>{{ user['idnumber'] }}</td>
+            <td>{{ user['auth'] }}</td>
+            <td>{{ user['adtype'] }}</td>
+            <td>{{ user['nationality'] }}</td>
+            <td>{{ user['stat'] }}</td>
+            <td>{{ user['dist'] }}</td>
+            <td>{{ user['town'] }}</td>
+            <td>{{ user['hno'] }}</td>
+           
+            <td>
+                <form action="/remove-user" method="POST" >
+                    <input type="hidden" name="order_id" value="{{ user['uid'] }}">
+                    <button type="submit" class="btn">Remove</button>
+                </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const navMenu = document.getElementById('nav-menu');
+    const navToggle = document.getElementById('nav-toggle');
+
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('show');
+    });
+
+    function setActive(link) {
+      const links = document.querySelectorAll('.nav__link');
+      links.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>

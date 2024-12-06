@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile | CropCart</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/3.5.0/remixicon.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .container1 { max-width: 1100px; margin: auto; padding: 0 1rem; }
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f8fb;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      
+      padding: 2rem 1rem;
+    }
+    .profile-header-container {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      background: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+      color: white;
+      border-radius: 10px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      margin-top:75px
+    }
+    .profile-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 5px solid white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .profile-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .profile-header-content {
+      flex: 1;
+      text-align: left;
+    }
+    .profile-header-content h1 {
+      font-size: 2.5rem;
+      margin: 0.5rem 0;
+    }
+    .profile-header-content h2 {
+      font-size: 1.2rem;
+      font-weight: 500;
+      opacity: 0.9;
+    }
+    .profile-sections {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .sidebar {
+      background: white;
+      flex: 1 1 300px;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .sidebar:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+    .sidebar h3 {
+      font-size: 1.6rem;
+      margin-bottom: 1.5rem;
+      color: #43e97b;
+    }
+    .sidebar ul {
+      list-style: none;
+      padding: 0;
+    }
+    .sidebar li {
+      margin-bottom: 1rem;
+    }
+    .sidebar p {
+      font-size: 1rem;
+      color: #555;
+    }
+    .charts {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+    .chart-container {
+      background: white;
+      flex: 1 1 400px;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+    canvas {
+      max-width: 100%;
+      height: 250px;
+    }
+    .header { 
+      position: fixed; 
+      width: 100%; 
+      top: 0; 
+      background: #fff; 
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+      z-index: 50; 
+    }
+    .nav { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 1rem 0; 
+      height: 35px; 
+    }
+    .nav__logo { 
+      font-weight: bold; 
+      background: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+      -webkit-background-clip: text;
+      color: transparent;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .nav__logo img { height: 35px; margin-left: 4px; }
+    .nav__list { 
+      display: flex; 
+      gap: 1.5rem; 
+      list-style: none; 
+    }
+    .nav__link { 
+      color: #333; 
+      text-decoration: none; 
+      display: flex; 
+      align-items: center; 
+      gap: 0.5rem; 
+      transition: all 0.3s; 
+    }
+    .nav__link:hover, .nav__link.active { 
+      color: #4FFFB0; 
+      text-shadow: 0px 0px 8px #4FFFB0; 
+    }
+    .nav__icons { 
+      display: flex; 
+      gap: 0.5rem; 
+      align-items: center; 
+    }
+    .nav__button { 
+      padding: 0.5rem 1rem; 
+      color: #fff; 
+      background-color: #4FFFB0; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      transition: background-color 0.3s; 
+    }
+    .nav__button:hover { background-color: #3ec99b; }
+    .nav__toggle { 
+      display: none; 
+      font-size: 1.5rem; 
+      cursor: pointer; 
+    }
+    @media (max-width: 768px) {
+      .nav__list { 
+        position: fixed; 
+        top: 0; 
+        right: -100%;
+        flex-direction: column; 
+        background: #fff; 
+        width: 60%; 
+        height: 100vh; 
+        padding-top: 4rem; 
+        transition: right 0.3s;
+        z-index: 100;
+      }
+      .nav__list.show { right: 0; }
+      .nav__toggle { display: block; color: #333; z-index: 102; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container1">
+      <nav class="nav">
+        <a href="#" class="nav__logo">
+          CropCart
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRYf8F22QlIDXQCPWgmW2KLZXxPhA9sIU9Yw&s" alt="Logo">
+        </a>
+        <ul class="nav__list" id="nav-menu">
+          <li><a href="/" class="nav__link"><i class="ri-home-line"></i> Home</a></li>
+          <li><a href="/products" class="nav__link"><i class="ri-shopping-cart-line"></i> Products</a></li>
+          <li><a href="about" class="nav__link"><i class="ri-information-line"></i> About Us</a></li>
+          <li><a href="/service" class="nav__link"><i class="ri-service-line"></i> Services</a></li>
+          <li><a href="#" class="nav__link"><i class="ri-contacts-line"></i> Contact</a></li>
+          <li><a href="/dashboard" class="nav__link"><i class="ri-dashboard-line"></i> Dashboard</a></li>
+          <li><a href="/profile" class="nav__link active"><i class="ri-user-line"></i></i> Profile</a></li>
+          
+
+        </ul>
+        <div class="nav__icons">
+          {% if not logged_in %}
+            <button class="nav__button" onclick="window.location.href='/login'">Login</button>
+            <button class="nav__button" onclick="window.location.href='/SingUp'"> Sign Up
+            </button>
+          {% else %}
+           
+
+
+            <button class="nav__button" onclick="window.location.href='/logout'">
+              <i class="ri-logout-box-line"></i> Logout
+            </button>
+          {% endif %}
+          <i class="ri-menu-line nav__toggle" id="nav-toggle"></i>
+        </div>
+
+      </nav>
+    </div>
+  </header>
+<div class="container">
+
+  <!-- Profile Header -->
+  <div class="profile-header-container">
+    <div class="profile-image">
+      {% if user['utype'] == "Farmer" %}
+        <img src="https://cdn-icons-png.flaticon.com/256/8686/8686070.png" alt="Farmer">
+      {% else %}
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQd4mMiaPELqJC5y-9nuQ5O2XyTj4iKH9V6FQ&s" alt="Buyer">
+      {% endif %}
+    </div>
+    <div class="profile-header-content">
+      <h1>{{user['uname']}}</h1>
+      <h2>[{{user['utype']}}]</h2>
+    </div>
+  </div>
+
+  <!-- Profile Sections -->
+  <div class="profile-sections">
+    <!-- Personal Details -->
+    <aside class="sidebar">
+      <h3>Personal Details</h3>
+      <ul>
+        <li><p><b>User Id:</b> {{user['uid']}}</p></li>
+        <li><p><b>Name:</b> {{user['uname']}}</p></li>
+        <li><p><b>Gender:</b> {{user['gender']}}</p></li>
+        <li><p><b>User type:</b> {{user['utype']}}</p></li>
+        <li><p><b>Mobile No:</b> {{user['mobilno']}}</p></li>
+        <li><p><b>Email:</b> {{user['email']}}</p></li>
+      </ul>
+    </aside>
+
+    <!-- Identity Details -->
+    <aside class="sidebar">
+      <h3>Identity Details</h3>
+      <ul>
+        <li><p><b>Id Type:</b> {{user['idtype']}}</p></li>
+        <li><p><b>Id No:</b> {{user['idnumber']}}</p></li>
+        <li><p><b>Approved by:</b> {{user['auth']}}</p></li>
+      </ul>
+    </aside>
+
+    <!-- Address Details -->
+    <aside class="sidebar">
+      <h3>Address Details</h3>
+      <ul>
+        <li><p><b>Address Type:</b> {{user['adtype']}}</p></li>
+        <li><p><b>Nationality:</b> {{user['nationality']}}</p></li>
+        <li><p><b>State:</b> {{user['stat']}}</p></li>
+        <li><p><b>District:</b> {{user['dist']}}</p></li>
+        <li><p><b>Mobile No:</b> {{user['mobilno']}}</p></li>
+        <li><p><b>Town:</b> {{user['town']}}</p></li>
+        <li><p><b>House No:</b> {{user['hno']}}</p></li>
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Chart Section -->
+  <div class="charts">
+    <div class="chart-container">
+      <h3>Order Status Overview</h3>
+      <canvas id="orderChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <h3>Order Proportions</h3>
+      <canvas id="orderPieChart"></canvas>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const orderData = {
+    labels: ['Ordered', 'Accepted', 'Delivered'],
+    datasets: [{
+      label: 'Order Status',
+      data: [{{ordered}}, {{accepted}}, {{delivered}}],
+      backgroundColor: ['#43e97b', '#38f9d7', '#4FFFB0'],
+      borderColor: ['#33c065', '#2fd6c2', '#38d9a9'],
+      borderWidth: 1
+    }]
+  };
+
+  new Chart(document.getElementById('orderChart'), {
+    type: 'bar',
+    data: orderData,
+    options: {
+      responsive: true,
+      scales: { y: { beginAtZero: true } },
+      plugins: { legend: { display: false } }
+    }
+  });
+
+  new Chart(document.getElementById('orderPieChart'), {
+    type: 'pie',
+    data: orderData,
+    options: {
+      responsive: true,
+      plugins: { legend: { position: 'top' } }
+    }
+  });
+  const navMenu = document.getElementById('nav-menu');
+    const navToggle = document.getElementById('nav-toggle');
+
+    navToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('show');
+    });
+
+    function setActive(link) {
+      const links = document.querySelectorAll('.nav__link');
+      links.forEach(l => l.classList.remove('active'));
+      link.classList.add('active');
+    }
+</script>
+
+</body>
+</html>
