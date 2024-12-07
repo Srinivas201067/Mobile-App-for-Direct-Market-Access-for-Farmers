@@ -4,6 +4,8 @@ from database import engine
 from sqlalchemy.sql import text
 from database import add_product_to_db, add_orders_to_db, accept_order, update, cancel_order, delivered_order, add_user_to_db, remove_Product
 from datetime import datetime
+from flask import request, jsonify
+from sqlalchemy.exc import IntegrityError
 
 app = Flask(__name__)
 app.secret_key = "your_secret_key"
@@ -36,6 +38,23 @@ def remove_orders(oid):
         result = conn.execute(text("DELETE FROM orders WHERE oid = :oid"),
                               {"oid": oid})
         conn.commit()
+
+def accept_users(uid):
+    with engine.connect() as conn:
+        # Start an explicit transaction
+        with conn.begin():
+            conn.execute(
+                text("UPDATE UserD SET status = 'Accepted' WHERE uid = :uid"),
+                {"uid": uid}
+            )
+def reject_users(uid):
+    with engine.connect() as conn:
+        # Start an explicit transaction
+        with conn.begin():
+            conn.execute(
+                text("UPDATE UserD SET status = 'Reject' WHERE uid = :uid"),
+                {"uid": uid}
+            )
 
 
 def load_products_from_db():
@@ -123,7 +142,18 @@ def load_admins_from_db():
 
 def load_UserD_from_db():
     with engine.connect() as conn:
-        result = conn.execute(text("SELECT * FROM UserD"))
+        result = conn.execute(
+            text("SELECT * FROM UserD WHERE status='Accepted'"))
+        users = []
+        for row in result:
+            users.append(row._asdict())
+        return users
+
+
+def load_UserA_from_db():
+    with engine.connect() as conn:
+        result = conn.execute(
+            text("SELECT * FROM UserD WHERE status='Pending'"))
         users = []
         for row in result:
             users.append(row._asdict())
@@ -399,6 +429,30 @@ def removeO():
     oid = request.form.get('oid')
     remove_orders(oid)
     return redirect(url_for('ManageO'))
+    
+@app.route("/acceptUser", methods=["POST"])
+def accept_user():
+    uid = request.form.get('uid')  # Retrieve the uid from the form
+    if not uid:
+        return "User ID not provided", 400
+
+    try:
+        accept_users(uid)  # Call the function to update the user status
+        return render_template('manageA.html', message="User accepted successfully!")
+    except Exception as e:
+        return f"An error occurred: {e}", 500
+
+@app.route("/rejectUser", methods=["POST"])
+def reject_user():
+    uid = request.form.get('uid')  # Retrieve the uid from the form
+    if not uid:
+        return "User ID not provided", 400
+
+    try:
+        reject_users(uid)  # Call the function to update the user status
+        return render_template('manageA.html', message="User accepted successfully!")
+    except Exception as e:
+        return f"An error occurred: {e}", 500
 
 
 @app.route("/ManageO")
@@ -422,6 +476,13 @@ def ManageU():
     logged_in = "username" in session
     users = load_UserD_from_db()
     return render_template('manageU.html', users=users, logged_in=logged_in)
+
+
+@app.route("/ManageA")
+def ManageA():
+    logged_in = "username" in session
+    users = load_UserA_from_db()
+    return render_template('manageA.html', users=users, logged_in=logged_in)
 
 
 @app.route("/admin")
@@ -450,6 +511,8 @@ def login():
     return render_template('login.html')
 
 
+
+
 @app.route("/search")
 def search():
     query = request.args.get('query')
@@ -471,13 +534,6 @@ def about():
 @app.route("/SingUp")
 def SingUp():
     return render_template('SingUp.html')
-
-
-@app.route("/register")
-def register():
-    data = request.form
-    add_user_to_db(data)
-    return redirect(url_for('dashboard'))
 
 
 @app.route("/log")
@@ -634,7 +690,7 @@ def accept():
     oid = request.form.get('oid')
     pid = request.form.get('pid')
     quantity = request.form.get('quantity')
-    accept_order(oid,pid,quantity)
+    accept_order(oid, pid, quantity)
     return redirect(url_for('dashboard'))
 
 
@@ -650,7 +706,7 @@ def delivered():
     rating = request.form.get('rating')
     oid = request.form.get('oid')
     pid = request.form.get('pid')
-    delivered_order(oid,pid,rating)
+    delivered_order(oid, pid, rating)
     return redirect(url_for('dashboard'))
 
 
@@ -676,7 +732,8 @@ def product():
     return render_template('product.html',
                            pd=pd,
                            user=user,
-                           logged_in=logged_in,uid=uid)
+                           logged_in=logged_in,
+                           uid=uid)
 
 
 @app.route('/placeorder', methods=['POST', 'GET', 'PUT'])
@@ -795,23 +852,75 @@ def chat():
                                messages=messages)
 
 
-@app.route('/send', methods=['POST', 'GET', 'PUT'])
-def send():
+@app.route('/register', methods=['POST'])
+def register():
+    try:
+        # Fetch form data
+        utype = request.form.get('utype')
+        full_name = request.form.get('Full Name')
+        dob = request.form.get('Date of Birth')
+        email = request.form.get('Email')
+        mobile_number = request.form.get('Mobile Number')
+        gender = request.form.get('Gender')
+        occupation = request.form.get('Occupation')
+        id_type = request.form.get('ID Type')
+        id_number = request.form.get('ID Number')
+        issued_authority = request.form.get('Issued Authority')
+        address_type = request.form.get('Address Type')
+        nationality = request.form.get('Nationality')
+        state = request.form.get('State')
+        district = request.form.get('District')
+        town_village = request.form.get('Town/Village')
+        house_number = request.form.get('House Number')
+        username = request.form.get('Username')
+        password = request.form.get('Enter Password')
+        confirm_password = request.form.get('Confirm Password')
 
-    pid = int(request.args.get('pid'))
-    sid = int(request.args.get('sid'))
-    rid = int(request.args.get('rid'))
+        # Validate passwords match
+        if password != confirm_password:
+            return jsonify({"error": "Passwords do not match"}), 400
 
-    mesg = request.form['mesg']
-    insert_message_into_db(sid, rid, pid, mesg)
+        # Insert data into the database using a transactional scope
+        with engine.begin(
+        ) as conn:  # `begin` starts a transaction automatically
+            conn.execute(
+                text("""
+                    INSERT INTO UserD (
+                        utype, uname, dob, email, mobilno, gender, ocup,
+                        idtype, idnumber, auth, adtype, nationality,
+                        stat, dist, town, hno,status
+                    ) VALUES (
+                        :utype, :full_name, :dob, :email, :mobile_number, :gender, :occupation,
+                        :id_type, :id_number, :issued_authority, :address_type, :nationality,
+                        :state, :district, :town_village, :house_number,:status
+                    )
+                """), {
+                    "utype": utype,
+                    "full_name": full_name,
+                    "dob": dob,
+                    "email": email,
+                    "mobile_number": mobile_number,
+                    "gender": gender,
+                    "occupation": occupation,
+                    "id_type": id_type,
+                    "id_number": id_number,
+                    "issued_authority": issued_authority,
+                    "address_type": address_type,
+                    "nationality": nationality,
+                    "state": state,
+                    "district": district,
+                    "town_village": town_village,
+                    "house_number": house_number,
+                    "status": 'Pending'
+                })
 
-    messages = load_message_from_db(sid, rid, pid)
+        return jsonify({"message": "Registration successful"}), 201
 
-    return render_template("chat.html",
-                           sid=sid,
-                           rid=rid,
-                           pid=pid,
-                           messages=messages)
+    except Exception as e:
+        return jsonify({
+            "error": "An unexpected error occurred",
+            "details": str(e)
+        }), 500
 
 
 if __name__ == "__main__":

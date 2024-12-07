@@ -111,9 +111,10 @@
     }
 
     /* Buttons */
+    
     .btn {
       padding: 0.8rem 1.5rem;
-      background-color:  #ff2c2c;
+      background-color: #4FFFB0;
       color: white;
       border: none;
       border-radius: 5px;
@@ -121,7 +122,31 @@
       transition: background-color 0.3s;
     }
     .btn:hover {
-      background-color:  #ff2c2c;
+      background-color: #3ec99b;
+    }
+    .btn {
+      padding: 0.8rem 1.5rem;
+      background-color: #4FFFB0;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .btn:hover {
+      background-color: #3ec99b;
+    }
+    .btn1 {
+      padding: 0.8rem 1.5rem;
+      background-color: #ff2c2c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .btn1:hover {
+      background-color: #ff2c2c;
     }
   </style>
 </head>
@@ -138,9 +163,9 @@
         <ul class="nav__list" id="nav-menu">
           <li><a href="/admin" class="nav__link"></i> Dashboard</a></li>
           <li><a href="/ManageU" class="nav__link">Manage Users</a></li>
-          <li><a href="/ManageP" class="nav__link active">Manage Products</a></li>
+          <li><a href="/ManageP" class="nav__link">Manage Products</a></li>
           <li><a href="/ManageO" class="nav__link">Manage Orders</a></li>
-          <li><a href="/ManageA" class="nav__link">Manage Application</a></li>
+          <li><a href="/ManageA" class="nav__link active">Manage Application</a></li>
 
 
         </ul>
@@ -160,35 +185,68 @@
   </header>
 
   <div class="container">
-    
+
     <div class="table-container">
-      <h2>Products</h2>
+      <h2>Users</h2>
       <table class="table">
         <thead>
           <tr>
-            <th>Farmer Name</th>
-            <th>Farmer ID</th>
-            <th>Product Name</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th>Date</th>
-            <th>Remove Product</th>
+            <th>Username</th>
+            <th>User type</th>
+            <th>Date of Birth</th>
+            <th>Email</th>
+            <th>Mobile no</th>
+            <th>Gender</th>
+            <th>Occupation</th>
+            <th>Id type</th>
+            <th>Id no</th>
+            <th>Authorized by</th>
+            <th>Address type</th>
+            <th>Nationality</th>
+            <th>State</th>
+            <th>District</th>
+            <th>Town</th>
+            <th>House no</th>
+            <th>Reject</th>
+            <th>Accept</th>
+
+
           </tr>
         </thead>
         <tbody>
-          {% for product in Products %}
+          {% for user in users %}
           <tr>
-            <td>{{ product['fname'] }}</td>
-            <td>{{ product['fid'] }}</td>
-            <td>{{ product['pname'] }}</td>
-            <td>{{ product['quantity'] }}</td>
-            <td>{{ product['price'] }}</td>
-            <td>{{ product['dt'] }}</td>
+            <td>{{ user['uname'] }}</td>
+            <td>{{ user['utpye'] }}</td>
+            <td>{{ user['dob'] }}</td>
+            <td>{{ user['email'] }}</td>
+            <td>{{ user['mobilno'] }}</td>
+            <td>{{ user['gender'] }}</td>
+            <td>{{ user['ocup'] }}</td>
+            <td>{{ user['idtpye'] }}</td>
+            <td>{{ user['idnumber'] }}</td>
+            <td>{{ user['auth'] }}</td>
+            <td>{{ user['adtype'] }}</td>
+            <td>{{ user['nationality'] }}</td>
+            <td>{{ user['stat'] }}</td>
+            <td>{{ user['dist'] }}</td>
+            <td>{{ user['town'] }}</td>
+            <td>{{ user['hno'] }}</td>
+            
             <td>
-                <form action="/removeP" method="POST" >
-                    <input type="hidden" name="pid" value="{{ product['pid'] }}">
-                    <button type="submit" class="btn">Remove</button>
-                </form>
+              <form action="/rejectUser" method="POST" >
+                  <input type="hidden" name="uid" value="{{ user['uid'] }}">
+                  <button type="submit" class="btn1">Accept</button>
+              </form>
+            </td>
+
+            <td>
+               
+              <form action="/acceptUser" method="POST" >
+                  <input type="hidden" name="uid" value="{{ user['uid'] }}">
+                  <button type="submit" class="btn">Accept</button>
+              </form>
+                
             </td>
           </tr>
           {% endfor %}

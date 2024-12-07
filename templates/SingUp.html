@@ -149,43 +149,41 @@
 <body>
     <div class="container">
         <header>Registration</header>
-        <form action="register" method="post"">
+        <form action="/register" method="post">
             <div class="form first">
                 <div class="details personal">
                     <span class="title">Personal Details</span>
                     <div class="fields">
                         <div class="input-field">
                             <label>Full Name</label>
-                            <input type="text" placeholder="Enter your name" required>
+                            <input type="text" placeholder="Enter your name" name="Full Name" required>
                         </div>
                         <div class="input-field">
                             <label>Date of Birth</label>
-                            <input type="date" required>
+                            <input type="date" name="Date of Birth" required>
                         </div>
                         <div class="input-field">
                             <label>Email</label>
-                            <input type="email" placeholder="Enter your email address" required>
+                            <input type="email" placeholder="Enter your email address" name="Email" required>
                         </div>
-
                     </div>
                     <div class="fields">
                         <div class="input-field">
                             <label>Mobile Number</label>
-                            <input type="text" placeholder="Enter your Mobile Number" required>
+                            <input type="text" placeholder="Enter your Mobile Number" name="Mobile Number" required>
                         </div>
                         <div class="input-field">
                             <label>Gender</label>
-                            <input type="text" placeholder="Enter your Gender" required>
+                            <input type="text" placeholder="Enter your Gender" name="Gender" required>
                         </div>
                         <div class="input-field">
                             <label>Occupation</label>
-                            <input type="text" placeholder="Enter your Occupation" required>
+                            <input type="text" placeholder="Enter your Occupation" name="Occupation" required>
                         </div>
                         <div class="input-field">
-                            <label>User type</label>
-                            <input type="text" placeholder="Farmer/Buyer" required>
+                            <label>User Type</label>
+                            <input type="text" placeholder="Farmer/Buyer" name="utype" required>
                         </div>
-
                     </div>
                 </div>
                 <div class="details personal">
@@ -193,70 +191,69 @@
                     <div class="fields">
                         <div class="input-field">
                             <label>ID Type</label>
-                            <input type="text" placeholder="Enter ID Type" required>
+                            <input type="text" placeholder="Enter ID Type" name="ID Type" required>
                         </div>
                         <div class="input-field">
                             <label>ID Number</label>
-                            <input type="text" placeholder="Enter ID Number" required>
+                            <input type="text" placeholder="Enter ID Number" name="ID Number" required>
                         </div>
                         <div class="input-field">
                             <label>Issued Authority</label>
-                            <input type="text" placeholder="Enter Issued Authority" required>
+                            <input type="text" placeholder="Enter Issued Authority" name="Issued Authority" required>
                         </div>
-
                     </div>
-                   
                 </div>
                 <input type="button" value="Next" class="form-button nextBtn">
             </div>
 
             <div class="form second">
                 <div class="details address">
-                    <span class="title">Address Datails</span>
+                    <span class="title">Address Details</span>
                     <div class="fields">
                         <div class="input-field">
                             <label>Address Type</label>
-                            <input type="text" placeholder="Enter your Address Type" required>
+                            <input type="text" placeholder="Enter your Address Type" name="Address Type" required>
                         </div>
                         <div class="input-field">
                             <label>Nationality</label>
-                            <input type="text" placeholder="Enter your Nationality" required>
+                            <input type="text" placeholder="Enter your Nationality" name="Nationality" required>
                         </div>
                         <div class="input-field">
                             <label>State</label>
-                            <input type="text" placeholder="Enter your State" required>
+                            <input type="text" placeholder="Enter your State" name="State" required>
                         </div>
                     </div>
                     <div class="fields">
                         <div class="input-field">
                             <label>District</label>
-                            <input type="text" placeholder="Enter address District" required>
+                            <input type="text" placeholder="Enter your District" name="District" required>
                         </div>
                         <div class="input-field">
                             <label>Town/Village</label>
-                            <input type="text" placeholder="Enter your Town/Village" required>
+                            <input type="text" placeholder="Enter your Town/Village" name="Town/Village" required>
                         </div>
                         <div class="input-field">
                             <label>House Number</label>
-                            <input type="text" placeholder="Enter your House Number" required>
+                            <input type="text" placeholder="Enter your House Number" name="House Number" required>
                         </div>
                     </div>
-                    <div class="details address">
-                        <span class="title">User Credentials</span>
-                        <div class="fields">
-                            <div class="input-field">
-                                <label>Username</label>
-                                <input type="text" placeholder="Enter Username" required>
-                            </div>
-                            <div class="input-field">
-                                <label>Enter Password</label>
-                                <input type="password" placeholder="Enter Password" required>
-                            </div>
-                            <div class="input-field">
-                                <label>Confirm Password</label>
-                                <input type="password" placeholder="Enter Confirm Password" required>
-                            </div>
+                </div>
+                <div class="details address">
+                    <span class="title">User Credentials</span>
+                    <div class="fields">
+                        <div class="input-field">
+                            <label>Username</label>
+                            <input type="text" placeholder="Enter Username" name="Username" required>
                         </div>
+                        <div class="input-field">
+                            <label>Enter Password</label>
+                            <input type="password" placeholder="Enter Password" name="Enter Password" required>
+                        </div>
+                        <div class="input-field">
+                            <label>Confirm Password</label>
+                            <input type="password" placeholder="Enter Confirm Password" name="Confirm Password" required>
+                        </div>
+                    </div>
                 </div>
                 <input type="button" value="Back" class="form-button backBtn">
                 <input type="submit" value="Submit" class="form-button">
