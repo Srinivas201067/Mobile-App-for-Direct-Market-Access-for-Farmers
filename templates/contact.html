@@ -10,7 +10,10 @@
     /* Reusing styles from original code */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Roboto', sans-serif; line-height: 1.6; background-color: #f9f9f9; color: #333; }
-    .container { max-width: 1100px; margin: auto; padding: 0 1rem; }
+    .container { max-width: 1100px; margin: auto; padding: 0 1rem 
+                
+               
+               }
 
     /* Navbar Styles */
     .header { 
@@ -132,6 +135,7 @@
       gap: 2rem;
       padding: 3rem 0;
       text-align: center;
+      margin-top:100px;
     }
     .feature {
       background: white;
@@ -209,7 +213,7 @@
             <button class="nav__button" onclick="window.location.href='/SingUp'"> Sign Up
             </button>
           {% else %}
-            
+
 
 
             <button class="nav__button" onclick="window.location.href='/logout'">
@@ -223,31 +227,15 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <p></p>
-    <h1>{{utype}}Welcome to CropCart</h1>
-    <p>Your one-stop platform for connecting farmers and consumers directly.</p>
-    <a href="#products" class="cta">Explore Products</a>
-  </section>
-
   <!-- Features Section -->
   <section class="container">
     <div class="features">
       <div class="feature">
-        <i class="ri-leaf-line"></i>
-        <h3>Fresh Produce</h3>
-        <p>Buy fresh produce directly from farmers, ensuring quality and sustainability.</p>
-      </div>
-      <div class="feature">
-        <i class="ri-user-heart-line"></i>
-        <h3>Empowering Farmers</h3>
-        <p>Help farmers gain fair prices and reduce dependency on intermediaries.</p>
-      </div>
-      <div class="feature">
-        <i class="ri-earth-line"></i>
-        <h3>Eco-Friendly</h3>
-        <p>Support local agriculture and promote sustainable farming practices.</p>
+        <i class="ri-phone-line"></i>
+
+        <h3>Contact Us</h3>
+        <p>Email: <a href="mailto:talarisrinivas201067@gmail.com">talarisrinivas201067@gmail.com</a></p>
+        <p>Mobile: <a href="tel:+91-9959806102">+91-9959806102</a></p>
       </div>
     </div>
   </section>

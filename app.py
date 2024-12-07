@@ -534,6 +534,9 @@ def about():
 @app.route("/SingUp")
 def SingUp():
     return render_template('SingUp.html')
+@app.route("/contact")
+def contact():
+    return render_template('contact.html')
 
 
 @app.route("/log")
