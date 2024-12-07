@@ -664,6 +664,8 @@ def view():
 
 @app.route("/products")
 def products():
+    if "username" not in session:
+        return redirect(url_for("login"))
     logged_in = "username" in session
     products = load_products_from_db()
     return render_template('products.html',
